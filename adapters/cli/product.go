@@ -38,13 +38,14 @@ func Run(service application.ProductServiceInterface, action string, productId s
 			return result, err
 		}
 		result = fmt.Sprintf("Product %s has been disabled.", res.GetName())
-	default:
-		res, err := service.Get(productId)
+	case "get":
+		product, err := service.Get(productId)
 		if err != nil {
 			return result, err
 		}
-		result = fmt.Sprintf("Product ID: %s\nName: %s\nPrice: %f\nStatus: %s",
-			res.GetID(), res.GetName(), res.GetPrice(), res.GetStatus())
+		result = fmt.Sprintf("Product ID %s\nName: %s\nPrice: %f\nStatus: %s", product.GetID(), product.GetName(), product.GetPrice(), product.GetStatus())
+	default:
+		result = "Invalid action"
 	}
 	return result, nil
 }
